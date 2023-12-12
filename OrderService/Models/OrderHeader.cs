@@ -21,5 +21,10 @@
         /// Clé étrangère de l'id de l'utilisateur
         /// </summary>
         public Guid IdUser { get; set; }
+
+        /// <summary>
+        /// Date de la commande
+        /// </summary>
+        public DateTime OrderDate { get; set; }
     }
 }
