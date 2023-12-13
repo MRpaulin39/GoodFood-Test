@@ -20,13 +20,15 @@ namespace OrderService.Insfrastructure.DataBase
         #region Public Methods
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.ApplyConfiguration(new EntityConfiguration.OrderHeaderEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new EntityConfiguration.OrderLineEntityTypeConfiguration());
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySQL("Server=172.17.0.3;Database=OrdersDb;Uid=root;Pwd=password;");
+            optionsBuilder.UseMySQL("Server=172.17.0.4;Database=OrdersDb;Uid=root;Pwd=password;");
         }
         #endregion
 

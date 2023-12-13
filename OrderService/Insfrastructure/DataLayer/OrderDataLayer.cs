@@ -11,6 +11,9 @@ namespace OrderService.Insfrastructure.DataLayer
         public OrderDataLayer(DefaultDbContext context)
         {
             _context = context;
+
+            //Permet de créer la base de données si non existante
+            _context.Database.EnsureCreated();
         }
 
         public List<OrderHeader> GetAll()
@@ -18,20 +21,17 @@ namespace OrderService.Insfrastructure.DataLayer
             return _context.OrderHeader.ToList();
         }
 
-        public string AddOrderHeader(OrderHeader orderHeader)
+        public OrderHeader GetOne(Guid idOrderHeader)
         {
-            OrderHeader newOrderHeader = new()
-            {
-                IdOrderDelivery = Guid.NewGuid(),
-                IdPicture = Guid.NewGuid(),
-                IdUser = Guid.NewGuid(),
-                OrderDate = DateTime.Now,
-            };
+            return _context.OrderHeader.Where(item => item.IdOrder == idOrderHeader).Single();
+        }
 
-            _context.OrderHeader.Add(newOrderHeader);
+        public OrderHeader AddOrderHeader(OrderHeader orderHeader)
+        {
+            _context.OrderHeader.Add(orderHeader);
             _context.SaveChanges();
 
-            return $"Commande {newOrderHeader.IdOrder} ajoutée !";
+            return orderHeader;
         }
     }
 }
