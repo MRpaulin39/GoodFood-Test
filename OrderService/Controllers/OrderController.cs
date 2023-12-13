@@ -33,13 +33,13 @@ namespace OrderService.Controllers
         [HttpGet("GetAll")]
         public async Task<ActionResult<List<OrderHeader>>> GetAll()
         {
-            return _orderDataLayer.GetAll();
+            return await _orderDataLayer.GetAll();
         }
 
         [HttpGet("GetOne/{idOrderHeader}", Name = "GetOneOrderHeader")]
         public async Task<ActionResult<OrderHeader>> GetOne(Guid idOrderHeader)
         {
-            return _orderDataLayer.GetOne(idOrderHeader);
+            return await _orderDataLayer.GetOne(idOrderHeader);
         }
 
         /// <summary>

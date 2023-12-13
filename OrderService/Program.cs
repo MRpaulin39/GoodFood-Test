@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using NSwag;
 using OrderService.Insfrastructure.DataBase;
 using OrderService.RabbitMq;
+using OrderGrpcService = OrderService.Services.OrderService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +28,9 @@ builder.Services.AddDbContext<DefaultDbContext>(options =>
     //options.UseMySQL(builder.Configuration.GetConnectionString("DefaultContext"));
 });
 
+builder.Services.AddGrpc();
+builder.Services.AddGrpcReflection();
+
 
 //Ajout du listener Rabbit MQ
 builder.Services.AddHostedService<RabbitMqConsumer>();
@@ -43,6 +47,7 @@ if (app.Environment.IsDevelopment())
     // Add web UIs to interact with the document
     // Available at: http://localhost:<port>/swagger
     app.UseSwaggerUi3();
+    app.MapGrpcReflectionService();
 }
 
 app.UseHttpsRedirection();
@@ -50,5 +55,9 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+app.UseRouting();
+
+app.UseGrpcWeb();
+app.MapGrpcService<OrderGrpcService>().EnableGrpcWeb();
 
 app.Run();

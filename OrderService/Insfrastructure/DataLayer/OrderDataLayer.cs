@@ -16,14 +16,14 @@ namespace OrderService.Insfrastructure.DataLayer
             _context.Database.EnsureCreated();
         }
 
-        public List<OrderHeader> GetAll()
+        public async Task<List<OrderHeader>> GetAll()
         {
-            return _context.OrderHeader.ToList();
+            return await _context.OrderHeader.ToListAsync();
         }
 
-        public OrderHeader GetOne(Guid idOrderHeader)
+        public async Task<OrderHeader> GetOne(Guid idOrderHeader)
         {
-            return _context.OrderHeader.Where(item => item.IdOrder == idOrderHeader).Single();
+            return await _context.OrderHeader.Where(item => item.IdOrder == idOrderHeader).SingleAsync();
         }
 
         public OrderHeader AddOrderHeader(OrderHeader orderHeader)

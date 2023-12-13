@@ -28,7 +28,7 @@ namespace OrderService.Insfrastructure.DataBase
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySQL("Server=172.17.0.4;Database=OrdersDb;Uid=root;Pwd=password;");
+            optionsBuilder.UseMySQL("Server=172.17.0.2;Database=OrdersDb;Uid=root;Pwd=password;");
         }
         #endregion
 
