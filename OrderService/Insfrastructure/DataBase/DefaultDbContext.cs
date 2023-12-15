@@ -25,11 +25,6 @@ namespace OrderService.Insfrastructure.DataBase
             modelBuilder.ApplyConfiguration(new EntityConfiguration.OrderHeaderEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new EntityConfiguration.OrderLineEntityTypeConfiguration());
         }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseMySQL("Server=172.17.0.2;Database=OrdersDb;Uid=root;Pwd=password;");
-        }
         #endregion
 
         #region Propriétés

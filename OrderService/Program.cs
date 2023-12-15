@@ -25,7 +25,7 @@ builder.Services.AddOpenApiDocument(options => {
 //Ajout de la config de la bdd
 builder.Services.AddDbContext<DefaultDbContext>(options =>
 {
-    //options.UseMySQL(builder.Configuration.GetConnectionString("DefaultContext"));
+    options.UseMySQL($"Server=bddordergoodfood-develop;Database=dborders;Uid=user;Pwd=password;");
 });
 
 builder.Services.AddGrpc();
@@ -38,8 +38,8 @@ builder.Services.AddHostedService<RabbitMqConsumer>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     // Add OpenAPI 3.0 document serving middleware
     // Available at: http://localhost:<port>/swagger/v1/swagger.json
     app.UseOpenApi();
@@ -48,7 +48,7 @@ if (app.Environment.IsDevelopment())
     // Available at: http://localhost:<port>/swagger
     app.UseSwaggerUi3();
     app.MapGrpcReflectionService();
-}
+//}
 
 app.UseHttpsRedirection();
 

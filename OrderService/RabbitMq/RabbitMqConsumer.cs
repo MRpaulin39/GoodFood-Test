@@ -19,7 +19,7 @@ namespace OrderService.RabbitMq
 
         private void InitRabbitMQ()
         {
-            var factory = new ConnectionFactory { HostName = "172.17.0.3" };
+            var factory = new ConnectionFactory { HostName = "rabbitmq-goodfood-develop" };
 
             // create connection  
             _connection = factory.CreateConnection();

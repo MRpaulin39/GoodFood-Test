@@ -1,0 +1,55 @@
+﻿version: "3.7"
+
+services:
+    apiordergoodfood-develop:
+        container_name: api-ordergoodfood-develop
+        build:
+            context: .
+            dockerfile: ./Dockerfile
+        restart: always
+        depends_on:
+            - bddordergoodfood-develop
+            - rabbitmqgoodfood-develop
+        ports:
+            - 8080:8080
+            - 8081:8081
+        networks:
+            - netapiordergoodfood-develop
+            - netbddordergoodfood-develop
+            - netrabbitmqgoodfood-develop
+
+    rabbitmqgoodfood-develop:
+        container_name: rabbitmq-goodfood-develop
+        image: rabbitmq:3
+        restart: always
+        ports:
+            - 15672:15672
+            - 5672:5672
+        networks:
+            - netrabbitmqgoodfood-develop
+
+    bddordergoodfood-develop:
+        container_name: mysql-ordergoodfood-develop
+        image: mysql:8.0
+        restart: always
+        networks:
+            - netbddordergoodfood-develop
+        env_file: .ENV
+        volumes:
+            - volbddordergoodfood-develop:/var/lib/mysql        
+
+networks:
+    netapiordergoodfood-develop:
+        name: netapiordergoodfood-develop
+    netrabbitmqgoodfood-develop:
+        name: netrabbitmqgoodfood-develop
+    netbddordergoodfood-develop:
+        name: netbddordergoodfood-develop
+
+volumes:
+    volbddordergoodfood-develop:
+        driver: local
+        driver_opts: 
+            o: bind
+            type: none
+            device: ~/bddordergoodfood-data-develop
