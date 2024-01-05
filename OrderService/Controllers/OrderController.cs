@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NSwag.Annotations;
 using OrderService.Insfrastructure.DataBase;
 using OrderService.Insfrastructure.DataLayer;
 using OrderService.Models;
-using System.Net;
+using OrderService.RabbitMq;
+using System.Text.Json;
 
 namespace OrderService.Controllers
 {
@@ -14,12 +14,14 @@ namespace OrderService.Controllers
     {
         #region Propriétés
         private readonly OrderDataLayer _orderDataLayer;
+        private readonly RabbitMqProducer _rabbitMqProducer;
         #endregion
 
         #region Constructeur
         public OrderController(DefaultDbContext context)
         {
-            _orderDataLayer = new(context);   
+            _orderDataLayer = new(context);
+            _rabbitMqProducer = new();
         }
         #endregion
 
@@ -53,6 +55,7 @@ namespace OrderService.Controllers
         public async Task<ActionResult> AddOne(OrderHeader orderHeader)
         {
             orderHeader = _orderDataLayer.AddOrderHeader(orderHeader);
+            _rabbitMqProducer.sendMessage(JsonSerializer.Serialize(orderHeader), "OrderCreation");
 
             return CreatedAtRoute("GetOneOrderHeader", new { idOrderHeader = orderHeader.IdOrder }, orderHeader);
         }

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Connections;
-using RabbitMQ.Client;
+﻿using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
 
@@ -19,7 +18,12 @@ namespace OrderService.RabbitMq
 
         private void InitRabbitMQ()
         {
-            var factory = new ConnectionFactory { HostName = "rabbitmq-goodfood-develop" };
+            var factory = new ConnectionFactory
+            {
+                HostName = Environment.GetEnvironmentVariable("RabbitMQ__Hostname"),
+                UserName = Environment.GetEnvironmentVariable("RabbitMQ__Username"),
+                Password = Environment.GetEnvironmentVariable("RabbitMQ__Password")
+            };
 
             // create connection  
             _connection = factory.CreateConnection();

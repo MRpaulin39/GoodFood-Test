@@ -13,7 +13,7 @@ namespace OrderService.Insfrastructure.DataBase
 
         public DefaultDbContext()
         {
-            
+
         }
         #endregion
 

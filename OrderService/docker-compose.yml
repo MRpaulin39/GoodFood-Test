@@ -7,6 +7,7 @@ services:
             context: .
             dockerfile: ./Dockerfile
         restart: always
+        env_file: .env
         depends_on:
             - bddordergoodfood-develop
             - rabbitmqgoodfood-develop
@@ -20,8 +21,9 @@ services:
 
     rabbitmqgoodfood-develop:
         container_name: rabbitmq-goodfood-develop
-        image: rabbitmq:3
+        image: rabbitmq:3-management
         restart: always
+        env_file: .env
         ports:
             - 15672:15672
             - 5672:5672
@@ -34,7 +36,7 @@ services:
         restart: always
         networks:
             - netbddordergoodfood-develop
-        env_file: .ENV
+        env_file: .env
         volumes:
             - volbddordergoodfood-develop:/var/lib/mysql        
 
