@@ -3,53 +3,46 @@
 services:
     apiordergoodfood-develop:
         container_name: api-ordergoodfood-develop
-        build:
-            context: .
-            dockerfile: ./Dockerfile
+        image: ghcr.io/mrpaulin39/goodfood-orders-test:latest
         restart: always
-        env_file: .env
+        environment:
+            - CONNECTION_STRING=Server=bddordergoodfood-develop;Database=dborders;Uid=root;Pwd=rootpassword;
+            - RabbitMQ__Hostname=rabbitmq-goodfood-develop
+            - RabbitMQ__Username=admin
+            - RabbitMQ__Password=admin
         depends_on:
             - bddordergoodfood-develop
             - rabbitmqgoodfood-develop
         ports:
             - 80:80
-            - 443:443
-        networks:
-            - netapiordergoodfood-develop
-            - netbddordergoodfood-develop
-            - netrabbitmqgoodfood-develop
 
     rabbitmqgoodfood-develop:
         container_name: rabbitmq-goodfood-develop
-        image: rabbitmq:3-management
+        image: rabbitmq:3.8.25-management-alpine
         restart: always
-        env_file: .env
+        environment:
+            - RABBITMQ_DEFAULT_USER=admin
+            - RABBITMQ_DEFAULT_PASS=admin
         ports:
             - 15672:15672
             - 5672:5672
-        networks:
-            - netrabbitmqgoodfood-develop
 
     bddordergoodfood-develop:
         container_name: mysql-ordergoodfood-develop
         image: mysql:8.0
         restart: always
-        networks:
-            - netbddordergoodfood-develop
-        env_file: .env
+        environment:
+            - MYSQL_ROOT_PASSWORD=rootpassword
+            - MYSQL_USER=goodfood
+            - MYSQL_PASSWORD=foodgood
+        ports:
+            - 3306:3306
         volumes:
             - volbddordergoodfood-develop:/var/lib/mysql        
 
-networks:
-    netapiordergoodfood-develop:
-        name: netapiordergoodfood-develop
-    netrabbitmqgoodfood-develop:
-        name: netrabbitmqgoodfood-develop
-    netbddordergoodfood-develop:
-        name: netbddordergoodfood-develop
-
 volumes:
     volbddordergoodfood-develop:
+        name: "bddOrderGoodFood-Data-Develop"
         driver: local
         driver_opts: 
             o: bind

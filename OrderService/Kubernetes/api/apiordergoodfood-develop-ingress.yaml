@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-apiordergoodfood-develop
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: "orderapi.local"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: apiordergoodfood-develop
+            port:
+              number: 80

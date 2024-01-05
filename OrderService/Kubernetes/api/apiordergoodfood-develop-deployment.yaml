@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: apiordergoodfood-develop
+  name: apiordergoodfood-develop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: apiordergoodfood-develop
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        io.kompose.network/goodfoodapiorder-default: "true"
+        io.kompose.service: apiordergoodfood-develop
+    spec:
+      containers:
+        - env:
+            - name: CONNECTION_STRING
+              value: Server=bddordergoodfood-develop;Database=dborders;Uid=root;Pwd=rootpassword;
+            - name: RabbitMQ__Hostname
+              value: rabbitmqgoodfood-develop
+            - name: RabbitMQ__Password
+              value: admin
+            - name: RabbitMQ__Username
+              value: admin
+            - name: ASPNETCORE_HTTP_PORTS
+              value: "80"
+          image: ghcr.io/mrpaulin39/goodfood-orders-test:latest
+          name: api-ordergoodfood-develop
+          ports:
+            - containerPort: 80
+          resources: {}
+      restartPolicy: Always
+status: {}

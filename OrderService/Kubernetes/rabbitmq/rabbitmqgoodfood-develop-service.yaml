@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    io.kompose.service: rabbitmqgoodfood-develop
+  name: rabbitmqgoodfood-develop
+spec:
+  ports:
+    - name: "webadmin"
+      port: 15672
+      targetPort: 15672
+    - name: "amqp"
+      port: 5672
+      targetPort: 5672
+  selector:
+    io.kompose.service: rabbitmqgoodfood-develop
+status:
+  loadBalancer: {}

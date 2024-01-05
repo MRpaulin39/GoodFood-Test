@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\Sources\kompose\kompose.exe convert
+    kompose.version: 1.31.2 (a92241f79)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: bddordergoodfood-develop
+  name: bddordergoodfood-develop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: bddordergoodfood-develop
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        io.kompose.network/goodfoodapiorder-default: "true"
+        io.kompose.service: bddordergoodfood-develop
+    spec:
+      containers:
+        - env:
+            - name: MYSQL_PASSWORD
+              value: foodgood
+            - name: MYSQL_ROOT_PASSWORD
+              value: rootpassword
+            - name: MYSQL_USER
+              value: goodfood
+          image: mysql:8.0
+          name: mysql-ordergoodfood-develop
+          ports:
+            - containerPort: 3306
+          resources: {}
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: volbddordergoodfood-develop
+      restartPolicy: Always
+      volumes:
+        - name: volbddordergoodfood-develop
+          persistentVolumeClaim:
+            claimName: volbddordergoodfood-develop
+status: {}

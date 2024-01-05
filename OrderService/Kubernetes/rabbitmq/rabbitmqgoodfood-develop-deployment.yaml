@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: rabbitmqgoodfood-develop
+  name: rabbitmqgoodfood-develop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: rabbitmqgoodfood-develop
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: C:\Sources\kompose\kompose.exe convert
+        kompose.version: 1.31.2 (a92241f79)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/goodfoodapiorder-default: "true"
+        io.kompose.service: rabbitmqgoodfood-develop
+    spec:
+      containers:
+        - env:
+            - name: RABBITMQ_DEFAULT_PASS
+              value: admin
+            - name: RABBITMQ_DEFAULT_USER
+              value: admin
+          image: rabbitmq:3.8.25-management-alpine
+          name: rabbitmq-goodfood-develop
+          ports:
+            - containerPort: 15672
+            - containerPort: 5672
+          resources: {}
+      restartPolicy: Always
+status: {}
