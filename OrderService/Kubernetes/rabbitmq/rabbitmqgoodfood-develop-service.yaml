@@ -7,7 +7,7 @@ metadata:
 spec:
   ports:
     - name: "webadmin"
-      port: 15672
+      port: 80
       targetPort: 15672
     - name: "amqp"
       port: 5672
