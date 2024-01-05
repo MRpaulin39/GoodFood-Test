@@ -29,4 +29,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/MRpaulin39/goodfood-orders-test:latest
+          tags: ghcr.io/mrpaulin39/goodfood-orders-test:latest
