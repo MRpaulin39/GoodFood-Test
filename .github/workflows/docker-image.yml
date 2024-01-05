@@ -29,4 +29,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/tpk-inde/monterroir-api:latest
+          tags: ghcr.io/MRpaulin39/goodfood-orders-test:latest
