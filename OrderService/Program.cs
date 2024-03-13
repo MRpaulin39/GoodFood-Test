@@ -27,8 +27,8 @@ builder.Services.AddDbContext<DefaultDbContext>(options =>
     options.UseMySQL(Environment.GetEnvironmentVariable("CONNECTION_STRING"));
 });
 
-builder.Services.AddGrpc();
-builder.Services.AddGrpcReflection();
+//builder.Services.AddGrpc();
+//builder.Services.AddGrpcReflection();
 
 
 //Ajout du listener Rabbit MQ
@@ -53,8 +53,9 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapGet("/", () => "Welcome to Order API ! :)");
 app.UseRouting();
 
-app.UseGrpcWeb();
+//app.UseGrpcWeb();
 
 app.Run();
