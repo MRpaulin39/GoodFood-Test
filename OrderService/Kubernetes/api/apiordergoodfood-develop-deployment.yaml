@@ -28,6 +28,8 @@ spec:
               value: admin
             - name: ASPNETCORE_HTTP_PORTS
               value: "80"
+            # - name: ASPNETCORE_HTTPS_PORTS
+            #   value: "443"
           image: ghcr.io/mrpaulin39/goodfood-orders-test:latest
           name: api-ordergoodfood-develop
           ports:
