@@ -8,7 +8,7 @@ using System.Text.Json;
 namespace OrderService.Controllers
 {
     [ApiController]
-    [Route("Orders")]
+    //[Route("Orders")]
     [Produces("application/json")]
     public class OrderController : ControllerBase
     {

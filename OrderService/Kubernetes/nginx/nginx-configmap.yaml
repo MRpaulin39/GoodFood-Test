@@ -19,7 +19,7 @@ data:
         }
 
         location /order/ {
-            proxy_pass http://apiordergoodfood-develop:80;
+            proxy_pass http://apiordergoodfood-develop:80/;
         }
       }
     }
