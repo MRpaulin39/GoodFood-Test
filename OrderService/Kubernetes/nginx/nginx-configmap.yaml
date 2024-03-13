@@ -1,0 +1,25 @@
+﻿apiVersion: v1  
+kind: ConfigMap  
+metadata:  
+  name: nginx-configmap
+data:  
+  nginx.conf: |
+    user nginx;
+    error_log  /var/log/nginx/error.log warn;
+    pid        /var/run/nginx.pid;
+    events {
+        worker_connections   1024;
+    }
+    http {
+      server {
+        listen 8081;
+
+        location /checkhealth {
+          return 200;
+        }
+
+        location /order/ {
+            proxy_pass http://apiordergoodfood-develop:80;
+        }
+      }
+    }
