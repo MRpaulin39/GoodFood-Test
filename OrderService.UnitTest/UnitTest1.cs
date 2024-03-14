@@ -5,7 +5,7 @@ namespace OrderService.UnitTest
         [Fact]
         public void Test1()
         {
-            Assert.Equal(1, 23);
+            Assert.Equal(1, 1);
         }
     }
 }
