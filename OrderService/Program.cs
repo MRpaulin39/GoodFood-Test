@@ -37,11 +37,17 @@ if (app.Environment.IsDevelopment())
 {
     //Add OpenAPI 3.0 document serving middleware
     //Available at: http://localhost:<port>/swagger/v1/swagger.json
-    app.UseOpenApi();
+    app.UseOpenApi(option =>
+    {
+        option.Path = "/order/swagger/v1/swagger.json";
+    });
 
     //   Add web UIs to interact with the document
     //Available at: http://localhost:<port>/swagger
-    app.UseSwaggerUi3();
+    app.UseSwaggerUi3(option =>
+    {
+        option.DocumentPath = "/order/swagger";
+    });
 }
 
 app.UseHttpsRedirection();
