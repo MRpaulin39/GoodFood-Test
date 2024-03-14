@@ -37,17 +37,35 @@ if (app.Environment.IsDevelopment())
 {
     //Add OpenAPI 3.0 document serving middleware
     //Available at: http://localhost:<port>/swagger/v1/swagger.json
-    app.UseOpenApi(option =>
-    {
-        option.Path = "/order/swagger/v1/swagger.json";
-    });
+    app.UseOpenApi();
 
     //   Add web UIs to interact with the document
     //Available at: http://localhost:<port>/swagger
-    app.UseSwaggerUi3(option =>
+    app.UseSwaggerUi3();
+
+    var root = Directory.GetCurrentDirectory();
+    var dotenv = Path.Combine(root, ".env");
+
+    if (!File.Exists(dotenv))
+        return;
+
+    foreach (var line in File.ReadAllLines(dotenv))
     {
-        option.DocumentPath = "/order/swagger";
-    });
+        var parts = line.Split(
+            '=',
+            StringSplitOptions.RemoveEmptyEntries);
+
+        if (parts.Length != 2)
+            continue;
+
+        Environment.SetEnvironmentVariable(parts[0], parts[1]);
+    }
+
+    Console.WriteLine("Dev environment detected");
+}
+else
+{
+    Console.WriteLine("Prod environment detected");
 }
 
 app.UseHttpsRedirection();
@@ -59,7 +77,5 @@ app.MapControllers();
 app.MapGet("/", () => "Welcome to Order API Demo ! :)");
 
 app.UseRouting();
-
-//app.UseGrpcWeb();
 
 app.Run();
