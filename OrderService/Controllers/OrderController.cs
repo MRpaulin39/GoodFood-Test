@@ -29,7 +29,7 @@ namespace OrderService.Controllers
         [HttpGet("Hi")]
         public async Task<ActionResult<string>> ImAlive()
         {
-            return "I'm alive Too !";
+            return "I'm alive 2 Too !";
         }
 
         [HttpGet("GetAll")]
